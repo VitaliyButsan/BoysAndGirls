@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */; };
 		589FC119237EE13700BE27D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589FC118237EE13700BE27D0 /* AppDelegate.swift */; };
 		589FC11B237EE13700BE27D0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589FC11A237EE13700BE27D0 /* SceneDelegate.swift */; };
 		589FC11D237EE13700BE27D0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589FC11C237EE13700BE27D0 /* ViewController.swift */; };
@@ -18,7 +19,20 @@
 		589FC13E237EE36500BE27D0 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589FC13D237EE36500BE27D0 /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		58383EC423805A6800149A04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 589FC10D237EE13700BE27D0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 589FC114237EE13700BE27D0;
+			remoteInfo = BoysAndGirls;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestsNetvorkingManager.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsNetvorkingManager.swift; sourceTree = "<group>"; };
+		58383EC323805A6800149A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		589FC115237EE13700BE27D0 /* BoysAndGirls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoysAndGirls.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		589FC118237EE13700BE27D0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		589FC11A237EE13700BE27D0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,6 +47,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		58383EBC23805A6800149A04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		589FC112237EE13700BE27D0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -43,10 +64,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58383EC023805A6800149A04 /* TestsNetvorkingManager */ = {
+			isa = PBXGroup;
+			children = (
+				58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */,
+				58383EC323805A6800149A04 /* Info.plist */,
+			);
+			path = TestsNetvorkingManager;
+			sourceTree = "<group>";
+		};
 		589FC10C237EE13700BE27D0 = {
 			isa = PBXGroup;
 			children = (
 				589FC117237EE13700BE27D0 /* BoysAndGirls */,
+				58383EC023805A6800149A04 /* TestsNetvorkingManager */,
 				589FC116237EE13700BE27D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				589FC115237EE13700BE27D0 /* BoysAndGirls.app */,
+				58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,6 +159,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		58383EBE23805A6800149A04 /* TestsNetvorkingManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 58383EC623805A6800149A04 /* Build configuration list for PBXNativeTarget "TestsNetvorkingManager" */;
+			buildPhases = (
+				58383EBB23805A6800149A04 /* Sources */,
+				58383EBC23805A6800149A04 /* Frameworks */,
+				58383EBD23805A6800149A04 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				58383EC523805A6800149A04 /* PBXTargetDependency */,
+			);
+			name = TestsNetvorkingManager;
+			productName = TestsNetvorkingManager;
+			productReference = 58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		589FC114237EE13700BE27D0 /* BoysAndGirls */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 589FC12C237EE13B00BE27D0 /* Build configuration list for PBXNativeTarget "BoysAndGirls" */;
@@ -154,6 +204,10 @@
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = Vitaliy;
 				TargetAttributes = {
+					58383EBE23805A6800149A04 = {
+						CreatedOnToolsVersion = 11.2;
+						TestTargetID = 589FC114237EE13700BE27D0;
+					};
 					589FC114237EE13700BE27D0 = {
 						CreatedOnToolsVersion = 11.2;
 					};
@@ -173,11 +227,19 @@
 			projectRoot = "";
 			targets = (
 				589FC114237EE13700BE27D0 /* BoysAndGirls */,
+				58383EBE23805A6800149A04 /* TestsNetvorkingManager */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		58383EBD23805A6800149A04 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		589FC113237EE13700BE27D0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -191,6 +253,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		58383EBB23805A6800149A04 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		589FC111237EE13700BE27D0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -205,6 +275,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		58383EC523805A6800149A04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 589FC114237EE13700BE27D0 /* BoysAndGirls */;
+			targetProxy = 58383EC423805A6800149A04 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		589FC135237EE2C100BE27D0 /* LaunchScreen.storyboard */ = {
@@ -226,6 +304,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		58383EC723805A6800149A04 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45JNFF5WM9;
+				INFOPLIST_FILE = TestsNetvorkingManager/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vit.TestsNetvorkingManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoysAndGirls.app/BoysAndGirls";
+			};
+			name = Debug;
+		};
+		58383EC823805A6800149A04 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 45JNFF5WM9;
+				INFOPLIST_FILE = TestsNetvorkingManager/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = vit.TestsNetvorkingManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BoysAndGirls.app/BoysAndGirls";
+			};
+			name = Release;
+		};
 		589FC12A237EE13B00BE27D0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -379,6 +497,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		58383EC623805A6800149A04 /* Build configuration list for PBXNativeTarget "TestsNetvorkingManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58383EC723805A6800149A04 /* Debug */,
+				58383EC823805A6800149A04 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		589FC110237EE13700BE27D0 /* Build configuration list for PBXProject "BoysAndGirls" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

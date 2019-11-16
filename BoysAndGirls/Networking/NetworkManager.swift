@@ -9,12 +9,12 @@
 import Foundation
 
 class NetworkManager {
-    
+
     static let instance = NetworkManager()
     
     private init() { }
     
-    func request(searchingWord: String, callBack: @escaping(Data?, Error?) -> Void) {
+    func request(searchingWord: String, callBack: @escaping(Data?, URLResponse?, Error?) -> Void) {
         let parameters = self.prepareParameters(searchWord: searchingWord)
         let url = self.url(params: parameters)
         var request = URLRequest(url: url)
@@ -47,11 +47,13 @@ class NetworkManager {
         return headers
     }
     
-    private func createDataTask(from request: URLRequest, callBack: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
-        return URLSession.shared.dataTask(with: request) { (data, _, error) in
+    private func createDataTask(from request: URLRequest, callBack: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        return URLSession.shared.dataTask(with: request) { (data, response, error) in
             DispatchQueue.main.async {
-                callBack(data, error)
+                callBack(data, response, error)
             }
         }
     }
+    
+    
 }
