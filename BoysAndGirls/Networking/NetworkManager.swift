@@ -10,12 +10,12 @@ import Foundation
 
 class NetworkManager {
 
-    static let instance = NetworkManager()
+    public static let instance = NetworkManager()
     
     private init() { }
     
-    func request(searchingWord: String, callBack: @escaping(Data?, URLResponse?, Error?) -> Void) {
-        let parameters = self.prepareParameters(searchWord: searchingWord)
+    func request(searchingPhoto: String, callBack: @escaping(Data?, URLResponse?, Error?) -> Void) {
+        let parameters = self.prepareParameters(searchWord: searchingPhoto)
         let url = self.url(params: parameters)
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = self.prepareHeaders()

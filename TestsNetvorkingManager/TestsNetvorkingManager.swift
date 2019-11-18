@@ -27,7 +27,7 @@ class NetworkManagerTests: XCTestCase {
     func testValidCallToUnsplashServerGetsHTTPStatusCode200() {
         let promise = expectation(description: "Status code: 200")
         
-        netManager.request(searchingWord: "boy") { (_, response, error) in
+        netManager.request(searchingPhoto: "boy") { (_, response, error) in
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
             
             if let error = error {
@@ -46,7 +46,7 @@ class NetworkManagerTests: XCTestCase {
     func testGetPhotosWithExpectedURLHostAndPath() {
         let promise = expectation(description: "Chack path and host")
         
-        netManager.request(searchingWord: "boy") { (_, response, _) in
+        netManager.request(searchingPhoto: "boy") { (_, response, _) in
             guard let url = (response as? HTTPURLResponse)?.url else { return }
             XCTAssertEqual(url.host, "api.unsplash.com")
             XCTAssertEqual(url.path, "/search/photos")
@@ -61,7 +61,7 @@ class NetworkManagerTests: XCTestCase {
         let promise = expectation(description: "Check received photo objects")
         var photos: [UnsplashPhoto]?
         
-        netManager.request(searchingWord: "boy") { (data, _, _) in
+        netManager.request(searchingPhoto: "boy") { (data, _, _) in
             guard let data = data else { return }
             
             let jsonData = try! JSONDecoder().decode(PhotoDataWrapper.self, from: data)
@@ -78,7 +78,7 @@ class NetworkManagerTests: XCTestCase {
     func testGetPhotosReturnError() {
         let promise = expectation(description: "Check get error")
         
-        netManager.request(searchingWord: "boy") { (_, _, error) in
+        netManager.request(searchingPhoto: "boy") { (_, _, error) in
             XCTAssertNil(error)
             promise.fulfill()
         }
@@ -90,7 +90,7 @@ class NetworkManagerTests: XCTestCase {
     func testGetPhotosInvalidJSONReturnsError() {
         let promise = expectation(description: "Check parse JSON")
         
-        netManager.request(searchingWord: "boy") { (data, _, _) in
+        netManager.request(searchingPhoto: "boy") { (data, _, _) in
             guard let data = data else { return }
             
             let jsonData = try? JSONDecoder().decode(PhotoDataWrapper.self, from: data)
