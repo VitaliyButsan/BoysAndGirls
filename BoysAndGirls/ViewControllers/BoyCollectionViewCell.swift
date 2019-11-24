@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BoyFaceCollectionViewCell: UICollectionViewCell {
+class BoyCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!

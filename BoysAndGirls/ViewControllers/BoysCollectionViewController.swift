@@ -27,7 +27,7 @@ class BoysCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.collectionView.backgroundColor = .lightGray
         self.setupObservers()
         photoModel.getPhotos(name: Constants.searchingString)
@@ -40,6 +40,10 @@ class BoysCollectionViewController: UICollectionViewController {
     }
     
     @objc func reloadRows() {
+        self.collectionView.reloadData()
+    }
+    
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         self.collectionView.reloadData()
     }
     
@@ -64,7 +68,7 @@ extension BoysCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as! BoyFaceCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as! BoyCollectionViewCell
         
         if let imageURLString = photoModel.photos[indexPath.row].urls[Constants.imageSize] {
             cell.imageURL = URL(string: imageURLString)

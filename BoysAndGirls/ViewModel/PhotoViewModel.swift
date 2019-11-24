@@ -11,12 +11,13 @@ import Foundation
 class PhotoViewModel {
     
     static let notificationNameString: String = "PhotoDataIsReceived"
+    private let dataBase = DataStorage()
     var photos: [UnsplashPhoto] = []
     
     func getPhotos(name: String) {
         NetworkManager.instance.request(searchingPhoto: name) { (data, _, error) in
             guard error == nil, let data = data else { return }
-            self.parseData(data: data)
+                self.parseData(data: data)
         }
     }
     
@@ -25,11 +26,12 @@ class PhotoViewModel {
             let jsonData = try JSONDecoder().decode(PhotoDataWrapper.self, from: data)
             self.photos = jsonData.results
             self.sendNotification()
+            
         } catch let error {
             print("Parsing Error: \(error.localizedDescription)")
         }
     }
-    
+
     private func sendNotification() {
         let notificationName = Notification.Name(PhotoViewModel.notificationNameString)
         NotificationCenter.default.post(name: notificationName, object: nil)
