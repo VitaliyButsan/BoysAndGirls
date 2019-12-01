@@ -6,14 +6,12 @@
 //  Copyright © 2019 Vitaliy. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class PhotoViewModel {
     
     static let notificationNameString: String = "PhotoDataIsReceived"
-    var photos: [UnsplashPhoto] = []
-    var photosRawData: [Data] = []
-    
+    var photos: [UIImage] = []
     
     func getPhotos(name: String, onPage: Int = 1) {
         NetworkManager.instance.request(searchingPhoto: name, onPage: onPage) { (data, _, error) in
@@ -21,7 +19,6 @@ class PhotoViewModel {
             
             let parsingResult = self.parseData(data: data)
             self.saveImagesFrom(parsingResult)
-            //self.sendNotification()
         }
     }
     
@@ -54,26 +51,14 @@ class PhotoViewModel {
             // wait for done of each operation in queue
             photoSaver.completionBlock = { [unowned self] in
                 guard let rawData = photoSaver.photoRawData else { return }
-                self.photosRawData.append(rawData)
+                guard let image = UIImage(data: rawData) else { return }
+                self.photos.append(image)
+                
                 if saveTaskQueue.operations.isEmpty {
                     self.sendNotification()
                 }
             }
             saveTaskQueue.addOperation(photoSaver)
-        }
- 
-        
-        /*
-        DispatchQueue.global().async { [unowned self] in
-            saveTaskQueue.addOperations(photoSaverOperations, waitUntilFinished: true)
-            DispatchQueue.main.async {
-                self.photosRawData.append(photoSaver.photoRawData!)
-            }
-        }
-        */
-        
-        for photo in photoDataModel {
-            self.photos.append(photo)
         }
     }
     
@@ -90,7 +75,7 @@ class PhotoSaverOperation: Operation {
 
     override func main() {
         
-        guard let urlString = inputPhoto?.urls["small"],
+        guard let urlString = inputPhoto?.urls["thumb"],
               let url = URL(string: urlString),
               let imageData = try? Data(contentsOf: url) else { return }
         self.photoRawData = imageData

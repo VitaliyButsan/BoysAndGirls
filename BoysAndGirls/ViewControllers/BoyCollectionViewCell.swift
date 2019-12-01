@@ -13,29 +13,9 @@ class BoyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
-    var imageURL: URL? {
-        didSet {
-            self.imageView.image = nil
-            self.updateUI()
-        }
-    }
-    
-    func updateUI() {
-        if let url = self.imageURL {
-            self.spinner.startAnimating()
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                let contentsOfURL = try? Data(contentsOf: url)
-                DispatchQueue.main.async {
-                    if url == self.imageURL {
-                        if let imageData = contentsOfURL {
-                            self.imageView.image = UIImage(data: imageData)
-                        }
-                    }
-                    
-                    self.spinner.stopAnimating()
-                }
-            }
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.imageView.layer.cornerRadius = 10
+        self.imageView.layer.masksToBounds = true 
     }
 }

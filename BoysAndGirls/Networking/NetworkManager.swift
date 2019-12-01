@@ -28,7 +28,7 @@ class NetworkManager {
         var parameters = [String:String]()
         parameters["query"] = searchWord
         parameters["page"] = String(onPage)
-        parameters["per_page"] = String(5)
+        parameters["per_page"] = String(10)
         return parameters
     }
     
