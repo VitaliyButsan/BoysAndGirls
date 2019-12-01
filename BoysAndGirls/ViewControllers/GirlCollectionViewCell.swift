@@ -10,5 +10,5 @@ import UIKit
 
 class GirlCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIView!
+    @IBOutlet weak var imageView: UIImageView!
 }

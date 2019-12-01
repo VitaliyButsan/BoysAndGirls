@@ -24,23 +24,29 @@ class BoysCollectionViewController: UICollectionViewController {
     }
     
     let photoModel = PhotoViewModel()
+    var isPagging: Bool = false
+    var page: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.collectionView.backgroundColor = .lightGray
+        
+        self.collectionView.backgroundColor = .lightText
         self.setupObservers()
-        photoModel.getPhotos(name: Constants.searchingString)
+        photoModel.getPhotos(name: Constants.searchingString, onPage: page)
     }
     
-    // waiting photos
+    // waiting retrieve data
     private func setupObservers() {
         let notificationName = NSNotification.Name(rawValue: PhotoViewModel.notificationNameString)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadRows), name: notificationName, object: nil)
     }
     
     @objc func reloadRows() {
-        self.collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            self.collectionView.backgroundColor = .red
+        }
+        self.isPagging = false
     }
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
@@ -56,7 +62,14 @@ class BoysCollectionViewController: UICollectionViewController {
 
 extension BoysCollectionViewController {
     
-    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        // pagination
+        if indexPath.row == photoModel.photos.count - 1, !isPagging {
+            isPagging = true
+            page = page + 1
+            photoModel.getPhotos(name: Constants.searchingString, onPage: page)
+        }
+    }
 }
 
 // MARK: - UICollectionView data source
@@ -64,15 +77,19 @@ extension BoysCollectionViewController {
 extension BoysCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoModel.photos.count
+        return photoModel.photosRawData.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as! BoyCollectionViewCell
         
-        if let imageURLString = photoModel.photos[indexPath.row].urls[Constants.imageSize] {
-            cell.imageURL = URL(string: imageURLString)
-        }
+        cell.contentMode = .scaleAspectFill
+        let data = photoModel.photosRawData[indexPath.row]
+        cell.imageView.image = UIImage(data: data)
+        
+        //if let imageURLString = photoModel.photos[indexPath.row].urls[Constants.imageSize] {
+            //cell.imageURL = URL(string: imageURLString)
+        //}
         
         return cell
     }
