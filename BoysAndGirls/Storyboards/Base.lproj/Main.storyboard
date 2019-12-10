@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewLayout key="collectionViewLayout" id="WPp-kR-J0i" customClass="PinterestLayout" customModule="BoysAndGirls" customModuleProvider="target"/>
+                        <collectionViewLayout key="collectionViewLayout" id="6IV-VB-4xt" customClass="PinterestLayout" customModule="BoysAndGirls" customModuleProvider="target"/>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BoyCell" id="4kU-JI-v0R" customClass="BoyCollectionViewCell" customModule="BoysAndGirls" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

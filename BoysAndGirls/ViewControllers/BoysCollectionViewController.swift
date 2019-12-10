@@ -17,10 +17,6 @@ class BoysCollectionViewController: UICollectionViewController {
         
         static let leadingSectionIndent: CGFloat = 8.0
         static let trailingSectionIndent: CGFloat = 8.0
-        static let leadingTrailingSectionIndent: CGFloat = leadingSectionIndent + trailingSectionIndent
-        static let cellSpasing: CGFloat = 4.0
-        static let cellsInRow: CGFloat = 2
-        static let allCellsSpasing: CGFloat = cellSpasing * (cellsInRow - 1)
     }
     
     let photoModel = PhotoViewModel()
@@ -65,13 +61,19 @@ class BoysCollectionViewController: UICollectionViewController {
 
 extension BoysCollectionViewController {
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        photoModel.photos.remove(at: indexPath.row)
+        let newIndexPath = IndexPath(row: indexPath.row, section: 0)
+        collectionView.deleteItems(at: [newIndexPath])
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // pagination
         print(indexPath.row, photoModel.photos.count - 1)
         if indexPath.row == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             page = page + 1
-            photoModel.getPhotos(name: Constants.searchingString, onPage: page)
+            //photoModel.getPhotos(name: Constants.searchingString, onPage: page)
         }
     }
 }

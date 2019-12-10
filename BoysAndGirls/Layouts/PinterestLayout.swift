@@ -78,5 +78,3 @@ class PinterestLayout: UICollectionViewLayout {
         return cache[indexPath.item]
     }
 }
-
-

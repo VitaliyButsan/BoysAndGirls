@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */; };
-		583961FE2384912D0042B099 /* CoreDataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583961FD2384912D0042B099 /* CoreDataAPI.swift */; };
-		584D8C292388996900D62DE2 /* Image+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584D8C272388996900D62DE2 /* Image+CoreDataClass.swift */; };
-		584D8C2A2388996900D62DE2 /* Image+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584D8C282388996900D62DE2 /* Image+CoreDataProperties.swift */; };
 		5867835A239435CB0096398B /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58678359239435CB0096398B /* PinterestLayout.swift */; };
 		58860A292386E7880072DD83 /* GirlsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58860A282386E7880072DD83 /* GirlsCollectionViewController.swift */; };
 		58860A2B2386EAB30072DD83 /* GirlCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58860A2A2386EAB30072DD83 /* GirlCollectionViewCell.swift */; };
@@ -41,9 +38,6 @@
 		58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestsNetvorkingManager.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsNetvorkingManager.swift; sourceTree = "<group>"; };
 		58383EC323805A6800149A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		583961FD2384912D0042B099 /* CoreDataAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAPI.swift; sourceTree = "<group>"; };
-		584D8C272388996900D62DE2 /* Image+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		584D8C282388996900D62DE2 /* Image+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		58678359239435CB0096398B /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
 		58860A282386E7880072DD83 /* GirlsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GirlsCollectionViewController.swift; sourceTree = "<group>"; };
 		58860A2A2386EAB30072DD83 /* GirlCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GirlCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -89,14 +83,6 @@
 			path = TestsNetvorkingManager;
 			sourceTree = "<group>";
 		};
-		583961FC2384910A0042B099 /* Storage API */ = {
-			isa = PBXGroup;
-			children = (
-				583961FD2384912D0042B099 /* CoreDataAPI.swift */,
-			);
-			path = "Storage API";
-			sourceTree = "<group>";
-		};
 		58678358239435860096398B /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,14 +113,11 @@
 			isa = PBXGroup;
 			children = (
 				58678358239435860096398B /* Layouts */,
-				584D8C272388996900D62DE2 /* Image+CoreDataClass.swift */,
-				584D8C282388996900D62DE2 /* Image+CoreDataProperties.swift */,
 				589FC133237EE25800BE27D0 /* ViewControllers */,
 				589FC134237EE26200BE27D0 /* Storyboards */,
 				589FC132237EE25200BE27D0 /* ViewModel */,
 				589FC131237EE24D00BE27D0 /* DataModel */,
 				589FC130237EE24700BE27D0 /* Networking */,
-				583961FC2384910A0042B099 /* Storage API */,
 				589FC12F237EE23400BE27D0 /* Support files */,
 				589FC121237EE13700BE27D0 /* BoysAndGirls.xcdatamodeld */,
 			);
@@ -308,16 +291,13 @@
 				589FC11D237EE13700BE27D0 /* BoysCollectionViewController.swift in Sources */,
 				589FC119237EE13700BE27D0 /* AppDelegate.swift in Sources */,
 				58860A292386E7880072DD83 /* GirlsCollectionViewController.swift in Sources */,
-				584D8C292388996900D62DE2 /* Image+CoreDataClass.swift in Sources */,
 				58CA278C2381ED5C00C39EC8 /* BoyCollectionViewCell.swift in Sources */,
-				584D8C2A2388996900D62DE2 /* Image+CoreDataProperties.swift in Sources */,
 				58860A2B2386EAB30072DD83 /* GirlCollectionViewCell.swift in Sources */,
 				589FC13C237EE33700BE27D0 /* NetworkManager.swift in Sources */,
 				589FC123237EE13700BE27D0 /* BoysAndGirls.xcdatamodeld in Sources */,
 				58CA279A2381F58C00C39EC8 /* PhotoViewModel.swift in Sources */,
 				5867835A239435CB0096398B /* PinterestLayout.swift in Sources */,
 				589FC11B237EE13700BE27D0 /* SceneDelegate.swift in Sources */,
-				583961FE2384912D0042B099 /* CoreDataAPI.swift in Sources */,
 				589FC13E237EE36500BE27D0 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
