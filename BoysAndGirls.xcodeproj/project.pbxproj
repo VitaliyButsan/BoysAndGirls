@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */; };
 		5867835A239435CB0096398B /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58678359239435CB0096398B /* PinterestLayout.swift */; };
+		5867836423A0407C0096398B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5867836323A0407C0096398B /* HeaderView.swift */; };
 		58860A292386E7880072DD83 /* GirlsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58860A282386E7880072DD83 /* GirlsCollectionViewController.swift */; };
 		58860A2B2386EAB30072DD83 /* GirlCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58860A2A2386EAB30072DD83 /* GirlCollectionViewCell.swift */; };
 		589FC119237EE13700BE27D0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589FC118237EE13700BE27D0 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 		58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsNetvorkingManager.swift; sourceTree = "<group>"; };
 		58383EC323805A6800149A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58678359239435CB0096398B /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		5867836323A0407C0096398B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		58860A282386E7880072DD83 /* GirlsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GirlsCollectionViewController.swift; sourceTree = "<group>"; };
 		58860A2A2386EAB30072DD83 /* GirlCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GirlCollectionViewCell.swift; sourceTree = "<group>"; };
 		589FC115237EE13700BE27D0 /* BoysAndGirls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoysAndGirls.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +93,14 @@
 			path = Layouts;
 			sourceTree = "<group>";
 		};
+		5867836223A0404A0096398B /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				5867836323A0407C0096398B /* HeaderView.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
 		589FC10C237EE13700BE27D0 = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +122,7 @@
 		589FC117237EE13700BE27D0 /* BoysAndGirls */ = {
 			isa = PBXGroup;
 			children = (
+				5867836223A0404A0096398B /* Header */,
 				58678358239435860096398B /* Layouts */,
 				589FC133237EE25800BE27D0 /* ViewControllers */,
 				589FC134237EE26200BE27D0 /* Storyboards */,
@@ -296,6 +307,7 @@
 				589FC13C237EE33700BE27D0 /* NetworkManager.swift in Sources */,
 				589FC123237EE13700BE27D0 /* BoysAndGirls.xcdatamodeld in Sources */,
 				58CA279A2381F58C00C39EC8 /* PhotoViewModel.swift in Sources */,
+				5867836423A0407C0096398B /* HeaderView.swift in Sources */,
 				5867835A239435CB0096398B /* PinterestLayout.swift in Sources */,
 				589FC11B237EE13700BE27D0 /* SceneDelegate.swift in Sources */,
 				589FC13E237EE36500BE27D0 /* DataModel.swift in Sources */,
