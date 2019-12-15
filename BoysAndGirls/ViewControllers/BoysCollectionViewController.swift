@@ -10,31 +10,44 @@ import UIKit
 
 class BoysCollectionViewController: UICollectionViewController {
     
+    var isPagging: Bool = false
+    var page: Int = 1
+    
     private struct Constants {
-        static let searchingString: String = "boy"
+        static let searchingString: String = "man face"
         static let cellID: String = "BoyCell"
         static let imageSize: String = "thumb"
+        static let headerViewHeight: CGFloat = 30.0
         
         static let leadingSectionIndent: CGFloat = 8.0
         static let trailingSectionIndent: CGFloat = 8.0
     }
     
     let photoModel = PhotoViewModel()
-    var isPagging: Bool = false
-    var page: Int = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setUpHeaderView()
+        self.setupObservers()
+        self.getData(byName: Constants.searchingString, onPage: page)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.setLayoutDelegate()
+    }
+    
+    private func setLayoutDelegate() {
         if let layout = collectionView?.collectionViewLayout as? PinterestLayout {
             layout.delegate = self
         }
-        
-        self.collectionView.backgroundColor = .lightText
-        self.setupObservers()
-        photoModel.getPhotos(name: Constants.searchingString, onPage: page)
     }
     
+    private func setUpHeaderView() {
+        collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId)
+    }
+
     // waiting retrieve data
     private func setupObservers() {
         let notificationName = NSNotification.Name(rawValue: PhotoViewModel.notificationNameString)
@@ -46,6 +59,10 @@ class BoysCollectionViewController: UICollectionViewController {
             self.collectionView.reloadData()
         }
         self.isPagging = false
+    }
+    
+    private func getData(byName name: String, onPage page: Int) {
+        photoModel.getPhotos(name: name, onPage: page)
     }
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
@@ -62,18 +79,18 @@ class BoysCollectionViewController: UICollectionViewController {
 extension BoysCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        photoModel.photos.remove(at: indexPath.row)
-        let newIndexPath = IndexPath(row: indexPath.row, section: 0)
-        collectionView.deleteItems(at: [newIndexPath])
+        self.photoModel.photos.remove(at: indexPath.row)
+        let indexPathToDelete = IndexPath(row: indexPath.row, section: 0)
+        collectionView.deleteItems(at: [indexPathToDelete])
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
         // pagination
-        print(indexPath.row, photoModel.photos.count - 1)
         if indexPath.row == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             page = page + 1
-            //photoModel.getPhotos(name: Constants.searchingString, onPage: page)
+            self.getData(byName: Constants.searchingString, onPage: page)
         }
     }
 }
@@ -92,6 +109,20 @@ extension BoysCollectionViewController {
         cell.imageView.image = photoModel.photos[indexPath.row]
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView () }
+            header.labelView.text = "Boys"
+            return header
+            
+        default:
+            return UICollectionReusableView()
+        }
+    }
+    
 }
 
 // MARK: - UICollectionView delegate flow layout
@@ -105,6 +136,10 @@ extension BoysCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: Constants.leadingSectionIndent, bottom: 0, right: Constants.trailingSectionIndent)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: Constants.headerViewHeight)
     }
 }
 
