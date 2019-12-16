@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		583567A823A80F26008CC487 /* deletion_cell_bubble_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 583567A723A80F26008CC487 /* deletion_cell_bubble_sound.mp3 */; };
 		58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */; };
 		5867835A239435CB0096398B /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58678359239435CB0096398B /* PinterestLayout.swift */; };
 		5867836423A0407C0096398B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5867836323A0407C0096398B /* HeaderView.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		583567A723A80F26008CC487 /* deletion_cell_bubble_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deletion_cell_bubble_sound.mp3; sourceTree = "<group>"; };
 		58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestsNetvorkingManager.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsNetvorkingManager.swift; sourceTree = "<group>"; };
 		58383EC323805A6800149A04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +78,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		583567A423A80C15008CC487 /* Sound effects */ = {
+			isa = PBXGroup;
+			children = (
+				583567A723A80F26008CC487 /* deletion_cell_bubble_sound.mp3 */,
+			);
+			path = "Sound effects";
+			sourceTree = "<group>";
+		};
 		58383EC023805A6800149A04 /* TestsNetvorkingManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +132,7 @@
 		589FC117237EE13700BE27D0 /* BoysAndGirls */ = {
 			isa = PBXGroup;
 			children = (
+				583567A423A80C15008CC487 /* Sound effects */,
 				5867836223A0404A0096398B /* Header */,
 				58678358239435860096398B /* Layouts */,
 				589FC133237EE25800BE27D0 /* ViewControllers */,
@@ -279,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58CA27982381F3FC00C39EC8 /* Main.storyboard in Resources */,
+				583567A823A80F26008CC487 /* deletion_cell_bubble_sound.mp3 in Resources */,
 				589FC125237EE13B00BE27D0 /* Assets.xcassets in Resources */,
 				58CA27972381F3FC00C39EC8 /* LaunchScreen.storyboard in Resources */,
 			);

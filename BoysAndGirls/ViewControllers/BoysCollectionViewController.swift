@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import AVFoundation
 
 class BoysCollectionViewController: UICollectionViewController {
     
+    var bubbleSound = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
+    var audioPlayer = AVAudioPlayer()
     var isPagging: Bool = false
     var page: Int = 1
     
@@ -69,6 +72,15 @@ class BoysCollectionViewController: UICollectionViewController {
         self.collectionView.reloadData()
     }
     
+    private func playDeletionCellSound() {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: bubbleSound)
+            audioPlayer.play()
+        } catch let error as NSError {
+            print(error.description)
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -82,6 +94,7 @@ extension BoysCollectionViewController {
         self.photoModel.photos.remove(at: indexPath.row)
         let indexPathToDelete = IndexPath(row: indexPath.row, section: 0)
         collectionView.deleteItems(at: [indexPathToDelete])
+        self.playDeletionCellSound()
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
