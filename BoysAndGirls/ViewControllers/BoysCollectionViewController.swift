@@ -16,6 +16,8 @@ class BoysCollectionViewController: UICollectionViewController {
     var isPagging: Bool = false
     var page: Int = 1
     
+    let photoModel = PhotoViewModel()
+    
     private struct Constants {
         static let searchingString: String = "man face"
         static let cellID: String = "BoyCell"
@@ -25,8 +27,6 @@ class BoysCollectionViewController: UICollectionViewController {
         static let leadingSectionIndent: CGFloat = 8.0
         static let trailingSectionIndent: CGFloat = 8.0
     }
-    
-    let photoModel = PhotoViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +71,7 @@ class BoysCollectionViewController: UICollectionViewController {
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         self.collectionView.reloadData()
     }
-    
-    private func playDeletionCellSound() {
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: bubbleSound)
-            audioPlayer.play()
-        } catch let error as NSError {
-            print(error.description)
-        }
-    }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -91,10 +82,38 @@ class BoysCollectionViewController: UICollectionViewController {
 extension BoysCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! BoyCollectionViewCell
+        
+        // bubble cell logic
+        UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+            cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+            
+        }, completion: { finished in
+            
+            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+                cell.transform = CGAffineTransform(scaleX: 3, y: 3)
+                cell.imageView.alpha = 1
+                self.deleteCell(at: indexPath)
+                self.playDeletionCellSound()
+                
+            }, completion: nil)
+        })
+    }
+    
+    private func deleteCell(at indexPath: IndexPath) {
         self.photoModel.photos.remove(at: indexPath.row)
         let indexPathToDelete = IndexPath(row: indexPath.row, section: 0)
         collectionView.deleteItems(at: [indexPathToDelete])
-        self.playDeletionCellSound()
+    }
+    
+    private func playDeletionCellSound() {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: bubbleSound)
+            audioPlayer.play()
+        } catch let error as NSError {
+            print(error.description)
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
