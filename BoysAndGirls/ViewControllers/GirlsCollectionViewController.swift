@@ -12,7 +12,7 @@ class GirlsCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView.backgroundColor = .green
+        self.collectionView.backgroundColor = .systemBlue
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

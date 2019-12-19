@@ -16,29 +16,52 @@ class BoysCollectionViewController: UICollectionViewController {
     var isPagging: Bool = false
     var page: Int = 1
     
-    let photoModel = PhotoViewModel()
+    private let photoModel = PhotoViewModel()
+    private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     private struct Constants {
         static let searchingString: String = "man face"
         static let cellID: String = "BoyCell"
         static let imageSize: String = "thumb"
         static let headerViewHeight: CGFloat = 30.0
+        static let footerViewHeight: CGFloat = 50.0
         
-        static let leadingSectionIndent: CGFloat = 8.0
-        static let trailingSectionIndent: CGFloat = 8.0
+        static let leadingSectionIndent: CGFloat = 1.0
+        static let trailingSectionIndent: CGFloat = 1.0
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.setUpHeaderView()
+        //self.setUpFooterView()
         self.setupObservers()
         self.getData(byName: Constants.searchingString, onPage: page)
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+       
         self.setLayoutDelegate()
+        self.setTabBarImagesRenderingMode()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super .viewDidAppear(animated)
+        self.addActivityIndicatorView()
+    }
+    
+    private func addActivityIndicatorView() {
+        self.view.addSubview(activityIndicatorView)
+        
+        self.activityIndicatorView.hidesWhenStopped = true
+        self.activityIndicatorView.center = self.view.center
+        self.activityIndicatorView.startAnimating()
+    }
+    
+    private func removeActivityIndicatorView() {
+        self.activityIndicatorView.removeFromSuperview()
+        self.activityIndicatorView.stopAnimating()
     }
     
     private func setLayoutDelegate() {
@@ -47,8 +70,21 @@ class BoysCollectionViewController: UICollectionViewController {
         }
     }
     
+    private func setTabBarImagesRenderingMode() {
+        if let items = self.tabBarController?.tabBar.items {
+            for item in 0..<items.count {
+                items[item].image = items[item].image?.withRenderingMode(.alwaysTemplate)
+                items[item].selectedImage = items[item].selectedImage?.withRenderingMode(.alwaysOriginal)
+            }
+        }
+    }
+    
     private func setUpHeaderView() {
         collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId)
+    }
+    
+    private func setUpFooterView() {
+        collectionView.register(FooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterView.reuseId)
     }
 
     // waiting retrieve data
@@ -59,6 +95,7 @@ class BoysCollectionViewController: UICollectionViewController {
     
     @objc func reloadRows() {
         DispatchQueue.main.async {
+            self.removeActivityIndicatorView()
             self.collectionView.reloadData()
         }
         self.isPagging = false
@@ -91,7 +128,7 @@ extension BoysCollectionViewController {
             
         }, completion: { finished in
             
-            UIView.animate(withDuration: 0.2, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+            UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
                 cell.transform = CGAffineTransform(scaleX: 3, y: 3)
                 cell.imageView.alpha = 1
                 self.deleteCell(at: indexPath)
@@ -119,6 +156,7 @@ extension BoysCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         // pagination
+        print(indexPath.row, photoModel.photos.count - 1)
         if indexPath.row == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             page = page + 1
@@ -130,7 +168,7 @@ extension BoysCollectionViewController {
 // MARK: - UICollectionView data source
 
 extension BoysCollectionViewController {
-    
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photoModel.photos.count
     }
@@ -145,11 +183,18 @@ extension BoysCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         switch kind {
-        case UICollectionView.elementKindSectionHeader:
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView () }
-            header.labelView.text = "Boys"
-            return header
             
+        case UICollectionView.elementKindSectionHeader:
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView() }
+            header.labelView.text = "Boys"
+            print("HEADER>>>>>>>>>>")
+            return header
+        /*
+        case UICollectionView.elementKindSectionFooter:
+            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterView.reuseId, for: indexPath) as? FooterView else { return UICollectionReusableView() }
+            print("FOOTER>>>>>>>>>>.")
+            return footer
+        */
         default:
             return UICollectionReusableView()
         }
@@ -160,19 +205,14 @@ extension BoysCollectionViewController {
 // MARK: - UICollectionView delegate flow layout
 
 extension BoysCollectionViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right + 10)) / 2
-        return CGSize(width: itemSize, height: itemSize)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: Constants.leadingSectionIndent, bottom: 0, right: Constants.trailingSectionIndent)
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: Constants.headerViewHeight)
     }
+    /*
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: Constants.footerViewHeight)
+    } */
 }
 
 // MARK: - PinterestLayoutDelegate

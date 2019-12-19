@@ -17,12 +17,12 @@ class PhotoViewModel {
         NetworkManager.instance.request(searchingPhoto: name, onPage: onPage) { (data, _, error) in
             guard error == nil, let data = data else { return }
             
-            let parsingResult = self.parseData(data: data)
+            let parsingResult = self.parse(data: data)
             self.saveImagesFrom(parsingResult)
         }
     }
     
-    private func parseData(data: Data) -> [UnsplashPhoto] {
+    private func parse(data: Data) -> [UnsplashPhoto] {
         do {
             let jsonData = try JSONDecoder().decode(PhotoDataWrapper.self, from: data)
             return jsonData.results
@@ -32,33 +32,37 @@ class PhotoViewModel {
         }
     }
 
-    private func saveImagesFrom(_ photoDataModel: [UnsplashPhoto]) {
+    private func saveImagesFrom(_ photoDataModels: [UnsplashPhoto]) {
         
-        let privateSerialQueue = DispatchQueue(label: "com.private.queue", qos: .userInitiated)
+        let privateSerialQueue = DispatchQueue(label: "com.private_serial_queue", qos: .userInitiated)
         
-        let saveTaskQueue: OperationQueue = {
+        let receivePhotosTaskQueue: OperationQueue = {
             let queue = OperationQueue()
-            queue.name = "Save perform queue"
+            queue.name = "Receive photos queue"
             queue.maxConcurrentOperationCount = 1
             queue.underlyingQueue = privateSerialQueue
             return queue
         }()
         
-        for photo in photoDataModel {
+        for photoModel in photoDataModels {
             // make instance of operation
-            let photoSaver = PhotoSaverOperation()
-            photoSaver.inputPhoto = photo
+            let photoReceiver = PhotoDataReceiverOperation()
+            photoReceiver.inputPhotoModel = photoModel
+            // add operation on queue
+            receivePhotosTaskQueue.addOperation(photoReceiver)
+            
             // wait for done of each operation in queue
-            photoSaver.completionBlock = { [unowned self] in
-                guard let rawData = photoSaver.photoRawData else { return }
+            photoReceiver.completionBlock = { [unowned self] in
+                guard let rawData = photoReceiver.receivedPhotoRawData else { return }
                 guard let image = UIImage(data: rawData) else { return }
+                print("photos.count:", self.photos.count)
                 self.photos.append(image)
                 
-                if saveTaskQueue.operations.isEmpty {
+                // send notification if all operation is performed on queue
+                if receivePhotosTaskQueue.operations.isEmpty {
                     self.sendNotification()
                 }
             }
-            saveTaskQueue.addOperation(photoSaver)
         }
     }
     
@@ -68,16 +72,17 @@ class PhotoViewModel {
     }
 }
 
-class PhotoSaverOperation: Operation {
+class PhotoDataReceiverOperation: Operation {
     
-    var inputPhoto: UnsplashPhoto?
-    var photoRawData: Data?
+    var inputPhotoModel: UnsplashPhoto?
+    var receivedPhotoRawData: Data?
 
     override func main() {
         
-        guard let urlString = inputPhoto?.urls["thumb"],
+        guard let urlString = inputPhotoModel?.urls["thumb"],
               let url = URL(string: urlString),
-              let imageData = try? Data(contentsOf: url) else { return }
-        self.photoRawData = imageData
+              let receivedImageData = try? Data(contentsOf: url) else { return }
+        
+        self.receivedPhotoRawData = receivedImageData
     }
 }

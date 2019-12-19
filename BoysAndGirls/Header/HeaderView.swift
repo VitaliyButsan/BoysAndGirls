@@ -20,6 +20,7 @@ class HeaderView: UICollectionReusableView {
     
     let labelView: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: "Copperplate", size: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
@@ -38,21 +39,21 @@ class HeaderView: UICollectionReusableView {
         addSubview(headerView)
         
         NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
-            headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0),
-            headerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0),
-            headerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0)
+            self.headerView.topAnchor.constraint(equalTo: topAnchor, constant: 0.0),
+            self.headerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0.0),
+            self.headerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0),
+            self.headerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0.0)
             ])
         
-        setupHeaderLabel()
+        self.setupHeaderLabel()
     }
     
     private func setupHeaderLabel() {
         headerView.addSubview(labelView)
         
         NSLayoutConstraint.activate([
-            labelView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
-            labelView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
+            self.labelView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            self.labelView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor)
         ])
     }
 }

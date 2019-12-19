@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5Z-bW-QkT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L5Z-bW-QkT">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Boys-->
+        <!--Boys Collection View Controller-->
         <scene sceneID="vRT-Ec-n6e">
             <objects>
                 <collectionViewController id="sKA-wm-jPk" customClass="BoysCollectionViewController" customModule="BoysAndGirls" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,13 +52,13 @@
                             <outlet property="delegate" destination="sKA-wm-jPk" id="PB2-kn-3pS"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Boys" id="ek3-TC-QAG"/>
+                    <tabBarItem key="tabBarItem" title="" image="boy_32x32" id="ek3-TC-QAG"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fES-lF-aOh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3091.304347826087" y="-3601.3392857142853"/>
         </scene>
-        <!--Girls-->
+        <!--Girls Collection View Controller-->
         <scene sceneID="X70-6e-elv">
             <objects>
                 <collectionViewController id="swU-r3-Mt7" customClass="GirlsCollectionViewController" customModule="BoysAndGirls" customModuleProvider="target" sceneMemberID="viewController">
@@ -102,7 +102,9 @@
                             <outlet property="delegate" destination="swU-r3-Mt7" id="NlZ-fQ-N6E"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Girls" id="Tko-o2-yeR"/>
+                    <tabBarItem key="tabBarItem" title="" image="girl_32x32" id="Tko-o2-yeR">
+                        <color key="badgeColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBarItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zRH-Gi-F95" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,4 +130,8 @@
             <point key="canvasLocation" x="-4001.449275362319" y="-3601.3392857142853"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="boy_32x32" width="32" height="32"/>
+        <image name="girl_32x32" width="32" height="32"/>
+    </resources>
 </document>
