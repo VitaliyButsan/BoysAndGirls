@@ -34,7 +34,6 @@ class BoysCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
 
         self.setUpHeaderView()
-        //self.setUpFooterView()
         self.setupObservers()
         self.getData(byName: Constants.searchingString, onPage: page)
     }
@@ -48,7 +47,9 @@ class BoysCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super .viewDidAppear(animated)
-        self.addActivityIndicatorView()
+        if photoModel.photos.isEmpty {
+            self.addActivityIndicatorView()
+        }
     }
     
     private func addActivityIndicatorView() {
@@ -81,10 +82,6 @@ class BoysCollectionViewController: UICollectionViewController {
     
     private func setUpHeaderView() {
         collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId)
-    }
-    
-    private func setUpFooterView() {
-        collectionView.register(FooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterView.reuseId)
     }
 
     // waiting retrieve data
@@ -156,7 +153,6 @@ extension BoysCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         // pagination
-        print(indexPath.row, photoModel.photos.count - 1)
         if indexPath.row == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             page = page + 1
@@ -187,19 +183,12 @@ extension BoysCollectionViewController {
         case UICollectionView.elementKindSectionHeader:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView() }
             header.labelView.text = "Boys"
-            print("HEADER>>>>>>>>>>")
             return header
-        /*
-        case UICollectionView.elementKindSectionFooter:
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: FooterView.reuseId, for: indexPath) as? FooterView else { return UICollectionReusableView() }
-            print("FOOTER>>>>>>>>>>.")
-            return footer
-        */
+            
         default:
             return UICollectionReusableView()
         }
     }
-    
 }
 
 // MARK: - UICollectionView delegate flow layout
@@ -209,10 +198,6 @@ extension BoysCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: Constants.headerViewHeight)
     }
-    /*
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: Constants.footerViewHeight)
-    } */
 }
 
 // MARK: - PinterestLayoutDelegate

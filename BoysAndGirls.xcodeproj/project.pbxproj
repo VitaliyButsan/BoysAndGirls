@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		580D11A523AC0C6D0086D5EB /* FooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D11A423AC0C6D0086D5EB /* FooterView.swift */; };
 		583567A823A80F26008CC487 /* deletion_cell_bubble_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 583567A723A80F26008CC487 /* deletion_cell_bubble_sound.mp3 */; };
 		58383EC223805A6800149A04 /* TestsNetvorkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */; };
 		5867835A239435CB0096398B /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58678359239435CB0096398B /* PinterestLayout.swift */; };
@@ -38,7 +37,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		580D11A423AC0C6D0086D5EB /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		583567A723A80F26008CC487 /* deletion_cell_bubble_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deletion_cell_bubble_sound.mp3; sourceTree = "<group>"; };
 		58383EBF23805A6800149A04 /* TestsNetvorkingManager.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestsNetvorkingManager.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58383EC123805A6800149A04 /* TestsNetvorkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsNetvorkingManager.swift; sourceTree = "<group>"; };
@@ -80,14 +78,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		580D11A323AC0C190086D5EB /* Footer */ = {
-			isa = PBXGroup;
-			children = (
-				580D11A423AC0C6D0086D5EB /* FooterView.swift */,
-			);
-			path = Footer;
-			sourceTree = "<group>";
-		};
 		583567A423A80C15008CC487 /* Sound effects */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +133,6 @@
 			isa = PBXGroup;
 			children = (
 				5867836223A0404A0096398B /* Header */,
-				580D11A323AC0C190086D5EB /* Footer */,
 				589FC133237EE25800BE27D0 /* ViewControllers */,
 				589FC134237EE26200BE27D0 /* Storyboards */,
 				58678358239435860096398B /* Layouts */,
@@ -333,7 +322,6 @@
 				5867836423A0407C0096398B /* HeaderView.swift in Sources */,
 				5867835A239435CB0096398B /* PinterestLayout.swift in Sources */,
 				589FC11B237EE13700BE27D0 /* SceneDelegate.swift in Sources */,
-				580D11A523AC0C6D0086D5EB /* FooterView.swift in Sources */,
 				589FC13E237EE36500BE27D0 /* DataModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

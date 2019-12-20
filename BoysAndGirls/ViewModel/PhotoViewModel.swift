@@ -14,7 +14,7 @@ class PhotoViewModel {
     var photos: [UIImage] = []
     
     func getPhotos(name: String, onPage: Int = 1) {
-        NetworkManager.instance.request(searchingPhoto: name, onPage: onPage) { (data, _, error) in
+        NetworkManager.instance.request(photoName: name, onPage: onPage) { (data, _, error) in
             guard error == nil, let data = data else { return }
             
             let parsingResult = self.parse(data: data)
@@ -55,10 +55,10 @@ class PhotoViewModel {
             photoReceiver.completionBlock = { [unowned self] in
                 guard let rawData = photoReceiver.receivedPhotoRawData else { return }
                 guard let image = UIImage(data: rawData) else { return }
-                print("photos.count:", self.photos.count)
                 self.photos.append(image)
+                print("photos.count:", self.photos.count)
                 
-                // send notification if all operation is performed on queue
+                // send notification if all operation is done on queue
                 if receivePhotosTaskQueue.operations.isEmpty {
                     self.sendNotification()
                 }

@@ -42,16 +42,9 @@ class PinterestLayout: UICollectionViewFlowLayout {
             xOffset.append(CGFloat(column) * columnWidth)
         }
         var column = 0
-        var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
-        
-        //self.cache.removeAll()
+        var yOffset: [CGFloat] = .init(repeating: 30, count: numberOfColumns)
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
-            
-            // offset for section header
-            if item == 0 || item == 1 {
-                yOffset[column] = yOffset[column] + 30
-            }
             
             let indexPath = IndexPath(item: item, section: 0)
 
@@ -71,32 +64,11 @@ class PinterestLayout: UICollectionViewFlowLayout {
         }
     }
     
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        guard let layoutAttributes = super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath) else { return nil }
-        return layoutAttributes
-    }
-    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        
-        guard let layoutAttributesInRect = super.layoutAttributesForElements(in: rect) else { return nil }
+        super.layoutAttributesForElements(in: rect)
         var visibleLayoutsAttributes: [UICollectionViewLayoutAttributes] = []
 
-        /*
-        for (indexOfAttributesSet, attributesOfItem) in layoutAttributesInRect.enumerated() {
-            
-            if attributesOfItem.representedElementCategory == .supplementaryView {
-                // add header and footer attributes
-                visibleLayoutsAttributes.append(attributesOfItem)
-                
-            } else if attributesOfItem.representedElementCategory == .cell {
-                // add cell attributes, omit header
-                visibleLayoutsAttributes.append(cache[indexOfAttributesSet])
-            }
- 
-        }
-        */
-
-        if let sectionHeaderAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: 0)) {
+        if let sectionHeaderAttributes = self.layoutAttributesForSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, at: IndexPath(row: 0, section: 0)), visibleLayoutsAttributes.isEmpty {
             visibleLayoutsAttributes.append(sectionHeaderAttributes)
         }
         
@@ -106,7 +78,6 @@ class PinterestLayout: UICollectionViewFlowLayout {
             }
         }
         
-        print("visible.attr.count", visibleLayoutsAttributes.count)
         return visibleLayoutsAttributes
     }
     

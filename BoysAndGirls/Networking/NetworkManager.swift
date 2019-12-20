@@ -14,8 +14,8 @@ class NetworkManager {
     
     private init() { }
     
-    func request(searchingPhoto: String, onPage: Int = 1, callBack: @escaping(Data?, URLResponse?, Error?) -> Void) {
-        let parameters = self.prepareParameters(searchWord: searchingPhoto, onPage: onPage)
+    func request(photoName: String, onPage: Int = 1, callBack: @escaping(Data?, URLResponse?, Error?) -> Void) {
+        let parameters = self.prepareParameters(searchWord: photoName, onPage: onPage)
         let url = self.url(params: parameters)
         var request = URLRequest(url: url)
         request.allHTTPHeaderFields = self.prepareHeaders()
