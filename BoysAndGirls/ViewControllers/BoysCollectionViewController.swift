@@ -82,10 +82,10 @@ class BoysCollectionViewController: UICollectionViewController {
     // waiting retrieve data
     private func setupObservers() {
         let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadRows), name: notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: notificationName, object: nil)
     }
     
-    @objc func reloadRows() {
+    @objc func reloadData() {
         DispatchQueue.main.async {
             self.removeActivityIndicator()
             self.collectionView.reloadData()
@@ -111,7 +111,6 @@ class BoysCollectionViewController: UICollectionViewController {
 extension BoysCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let cell = collectionView.cellForItem(at: indexPath) as! BoyCollectionViewCell
         
         // bubble cell logic
@@ -131,8 +130,8 @@ extension BoysCollectionViewController {
     }
     
     private func deleteCell(at indexPath: IndexPath) {
-        self.photoModel.photos.remove(at: indexPath.row)
-        let indexPathToDelete = IndexPath(row: indexPath.row, section: 0)
+        self.photoModel.photos.remove(at: indexPath.item)
+        let indexPathToDelete = IndexPath(row: indexPath.item, section: 0)
         collectionView.deleteItems(at: [indexPathToDelete])
     }
     
@@ -146,7 +145,6 @@ extension BoysCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
         // pagination
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true

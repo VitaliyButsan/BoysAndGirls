@@ -59,7 +59,7 @@ class PhotoViewModel {
                 guard let rawData = photoReceiver.receivedPhotoRawData else { return }
                 guard let image = UIImage(data: rawData) else { return }
                 self.photos.append(image)
-                print("photos.count:", self.photos.count)
+                print("received_photos_from_net:", self.photos.count)
                 
                 // send notification if all operation is done on queue
                 if receivePhotosTaskQueue.operations.isEmpty {

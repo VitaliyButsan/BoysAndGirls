@@ -19,6 +19,7 @@ class GirlsCollectionViewController: UICollectionViewController {
     fileprivate let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     private struct Constants {
+        static let bubbleSound: URL = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
         static let photoName: String = "Girl face"
         static let titleText: String = "Girls"
         
@@ -73,10 +74,10 @@ class GirlsCollectionViewController: UICollectionViewController {
     
     private func setUpObservers() {
         let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadRows), name: notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: notificationName, object: nil)
     }
     
-    @objc func reloadRows() {
+    @objc func reloadData() {
         DispatchQueue.main.async {
             self.removeActivityIndicator()
             self.collectionView.reloadData()
@@ -102,8 +103,42 @@ class GirlsCollectionViewController: UICollectionViewController {
 // MAKR: - Collection view delegate
 
 extension GirlsCollectionViewController {
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! GirlCollectionViewCell
+        
+        // bubble cell logic
+        UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+            cell.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+            
+        }, completion: { finished in
+            
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: {
+                cell.transform = CGAffineTransform(scaleX: 3, y: 3)
+                cell.imageView.alpha = 1
+                self.deleteCell(at: indexPath)
+                self.playDeletionCellSound()
+                
+            }, completion: nil )
+        })
+    }
+    
+    private func deleteCell(at indexPath: IndexPath) {
+        self.photoModel.photos.remove(at: indexPath.item)
+        let indexPathToDelete = IndexPath(row: indexPath.item, section: 0)
+        collectionView.deleteItems(at: [indexPathToDelete])
+    }
+    
+    private func playDeletionCellSound() {
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: Constants.bubbleSound)
+            audioPlayer.play()
+        } catch let error as NSError {
+            print(error.description)
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         // pagination
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
