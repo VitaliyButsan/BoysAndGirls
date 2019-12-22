@@ -13,7 +13,7 @@ class BoysCollectionViewController: UICollectionViewController {
     
     private var audioPlayer: AVAudioPlayer = AVAudioPlayer()
     private var isPagging: Bool = false
-    private var page: Int = 1
+    private var pageNumber: Int = 1
    
     fileprivate let photoModel: PhotoViewModel = PhotoViewModel()
     fileprivate let activityIndicatorView = UIActivityIndicatorView(style: .large)
@@ -21,6 +21,7 @@ class BoysCollectionViewController: UICollectionViewController {
     private struct Constants {
         static let bubbleSound: URL = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
         static let photoName: String = "Man face"
+        static let titleText: String = "Boys"
         static let imageSize: String = "thumb"
         static let headerViewHeight: CGFloat = 30.0
         static let footerViewHeight: CGFloat = 50.0
@@ -31,14 +32,14 @@ class BoysCollectionViewController: UICollectionViewController {
 
         self.setUpHeaderView()
         self.setupObservers()
-        self.getData(byName: Constants.photoName, onPage: page)
+        self.getData(byName: Constants.photoName, onPage: pageNumber)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
        
         self.setLayoutDelegate()
-        self.setTabBarImagesRenderingMode()
+        self.setTabBarImageRenderingMode()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,12 +68,10 @@ class BoysCollectionViewController: UICollectionViewController {
         }
     }
     
-    private func setTabBarImagesRenderingMode() {
-        if let items = self.tabBarController?.tabBar.items {
-            for item in 0..<items.count {
-                items[item].image = items[item].image?.withRenderingMode(.alwaysTemplate)
-                items[item].selectedImage = items[item].selectedImage?.withRenderingMode(.alwaysOriginal)
-            }
+    private func setTabBarImageRenderingMode() {
+        if tabBarItem != nil {
+            tabBarItem.image = tabBarItem.image?.withRenderingMode(.alwaysTemplate)
+            tabBarItem.selectedImage = tabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
         }
     }
     
@@ -151,8 +150,8 @@ extension BoysCollectionViewController {
         // pagination
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
-            page += 1
-            self.getData(byName: Constants.photoName, onPage: page)
+            pageNumber += 1
+            self.getData(byName: Constants.photoName, onPage: pageNumber)
         }
     }
 }
@@ -178,7 +177,7 @@ extension BoysCollectionViewController {
             
         case UICollectionView.elementKindSectionHeader:
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView() }
-            header.labelView.text = "Boys"
+            header.titleLabel.text = Constants.titleText
             return header
             
         default:

@@ -13,25 +13,31 @@ class GirlsCollectionViewController: UICollectionViewController {
 
     private var audioPlayer: AVAudioPlayer = AVAudioPlayer()
     private var isPagging: Bool = false
-    private var page: Int = 1
+    private var pageNumber: Int = 1
     
     fileprivate let photoModel: PhotoViewModel = PhotoViewModel()
     fileprivate let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     private struct Constants {
         static let photoName: String = "Girl face"
+        static let titleText: String = "Girls"
+        
+        static let headerViewHeight: CGFloat = 30.0
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setUpHeaderView()
         self.setUpObservers()
-        self.getData(byName: Constants.photoName, onPage: page)
+        self.getData(byName: Constants.photoName, onPage: pageNumber)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
         self.setLayoutDelegate()
+        self.setTabBarImageRenderingMode()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,6 +60,17 @@ class GirlsCollectionViewController: UICollectionViewController {
         self.activityIndicatorView.stopAnimating()
     }
     
+    private func setTabBarImageRenderingMode() {
+        if tabBarItem != nil {
+            tabBarItem.image = tabBarItem.image?.withRenderingMode(.alwaysTemplate)
+            tabBarItem.selectedImage = tabBarItem.selectedImage?.withRenderingMode(.alwaysOriginal)
+        }
+    }
+    
+    private func setUpHeaderView() {
+        collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId)
+    }
+    
     private func setUpObservers() {
         let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadRows), name: notificationName, object: nil)
@@ -64,7 +81,7 @@ class GirlsCollectionViewController: UICollectionViewController {
             self.removeActivityIndicator()
             self.collectionView.reloadData()
         }
-        self.isPagging = false 
+        self.isPagging = false
     }
     
     private func getData(byName photoName: String, onPage: Int) {
@@ -90,8 +107,8 @@ extension GirlsCollectionViewController {
         // pagination
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
-            page += 1
-            self.getData(byName: Constants.photoName, onPage: page)
+            pageNumber += 1
+            self.getData(byName: Constants.photoName, onPage: pageNumber)
         }
     }
 }
@@ -110,11 +127,28 @@ extension GirlsCollectionViewController {
         cell.imageView.image = self.photoModel.photos[indexPath.row]
         return cell
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        switch kind {
+            
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.reuseId, for: indexPath) as? HeaderView else { return UICollectionReusableView() }
+            headerView.titleLabel.text = Constants.titleText
+            return headerView
+        default:
+            fatalError()
+        }
+    }
 }
 
 // MARK: - Collection view delegate flow layout
 
-
+extension GirlsCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: Constants.headerViewHeight)
+    }
+}
 
 // MARK: - ProsentLayoutDelegate
 
