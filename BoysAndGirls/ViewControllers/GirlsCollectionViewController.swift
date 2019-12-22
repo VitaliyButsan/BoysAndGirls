@@ -7,27 +7,51 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GirlsCollectionViewController: UICollectionViewController {
 
+    private var audioPlayer: AVAudioPlayer = AVAudioPlayer()
+    private var isPagging: Bool = false
+    private var page: Int = 1
+    
+    fileprivate let photoModel: PhotoViewModel = PhotoViewModel()
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(style: .large)
+    
     private struct Constants {
         static let photoName: String = "Girl face"
     }
     
-    let photoModel = PhotoViewModel()
-    let page: Int = 1
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setLayoutDelegate()
         self.setUpObservers()
-        self.getData(withPhotoName: Constants.photoName, onPage: page)
+        self.getData(byName: Constants.photoName, onPage: page)
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        self.setLayoutDelegate()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if photoModel.photos.isEmpty {
+            self.addActivityIndicator()
+        }
+    }
+    
+    private func addActivityIndicator() {
+        self.view.addSubview(self.activityIndicatorView)
         
+        self.activityIndicatorView.hidesWhenStopped = true
+        self.activityIndicatorView.center = self.view.center
+        self.activityIndicatorView.startAnimating()
+    }
+    
+    private func removeActivityIndicator() {
+        self.activityIndicatorView.removeFromSuperview()
+        self.activityIndicatorView.stopAnimating()
     }
     
     private func setUpObservers() {
@@ -36,13 +60,14 @@ class GirlsCollectionViewController: UICollectionViewController {
     }
     
     @objc func reloadRows() {
-        print("girl_data_is_received! Ok!")
         DispatchQueue.main.async {
+            self.removeActivityIndicator()
             self.collectionView.reloadData()
         }
+        self.isPagging = false 
     }
     
-    private func getData(withPhotoName photoName: String, onPage: Int) {
+    private func getData(byName photoName: String, onPage: Int) {
         self.photoModel.getPhotos(name: photoName, onPage: onPage)
     }
     
@@ -59,7 +84,17 @@ class GirlsCollectionViewController: UICollectionViewController {
 
 // MAKR: - Collection view delegate
 
-
+extension GirlsCollectionViewController {
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    
+        // pagination
+        if indexPath.item == photoModel.photos.count - 1, !isPagging {
+            isPagging = true
+            page += 1
+            self.getData(byName: Constants.photoName, onPage: page)
+        }
+    }
+}
 
 // MARK: - Collection view data source
 

@@ -11,22 +11,19 @@ import AVFoundation
 
 class BoysCollectionViewController: UICollectionViewController {
     
-    var bubbleSound = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
-    var audioPlayer = AVAudioPlayer()
-    var isPagging: Bool = false
-    var page: Int = 1
-    
-    private let photoModel = PhotoViewModel()
-    private let activityIndicatorView = UIActivityIndicatorView(style: .large)
+    private var audioPlayer: AVAudioPlayer = AVAudioPlayer()
+    private var isPagging: Bool = false
+    private var page: Int = 1
+   
+    fileprivate let photoModel: PhotoViewModel = PhotoViewModel()
+    fileprivate let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     private struct Constants {
+        static let bubbleSound: URL = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
         static let photoName: String = "Man face"
         static let imageSize: String = "thumb"
         static let headerViewHeight: CGFloat = 30.0
         static let footerViewHeight: CGFloat = 50.0
-        
-        static let leadingSectionIndent: CGFloat = 1.0
-        static let trailingSectionIndent: CGFloat = 1.0
     }
 
     override func viewDidLoad() {
@@ -52,14 +49,14 @@ class BoysCollectionViewController: UICollectionViewController {
     }
     
     private func addActivityIndicatorView() {
-        self.view.addSubview(activityIndicatorView)
+        self.view.addSubview(self.activityIndicatorView)
         
         self.activityIndicatorView.hidesWhenStopped = true
         self.activityIndicatorView.center = self.view.center
         self.activityIndicatorView.startAnimating()
     }
     
-    private func removeActivityIndicatorView() {
+    private func removeActivityIndicator() {
         self.activityIndicatorView.removeFromSuperview()
         self.activityIndicatorView.stopAnimating()
     }
@@ -90,9 +87,8 @@ class BoysCollectionViewController: UICollectionViewController {
     }
     
     @objc func reloadRows() {
-        print("boys_data_is_received. Ok")
         DispatchQueue.main.async {
-            self.removeActivityIndicatorView()
+            self.removeActivityIndicator()
             self.collectionView.reloadData()
         }
         self.isPagging = false
@@ -143,7 +139,7 @@ extension BoysCollectionViewController {
     
     private func playDeletionCellSound() {
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: bubbleSound)
+            audioPlayer = try AVAudioPlayer(contentsOf: Constants.bubbleSound)
             audioPlayer.play()
         } catch let error as NSError {
             print(error.description)
@@ -153,9 +149,9 @@ extension BoysCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         // pagination
-        if indexPath.row == photoModel.photos.count - 1, !isPagging {
+        if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
-            page = page + 1
+            page += 1
             self.getData(byName: Constants.photoName, onPage: page)
         }
     }
