@@ -10,10 +10,13 @@ import UIKit
 
 class PhotoViewModel {
     
-    static let notificationNameString: String = "PhotoDataIsReceived"
+    static var notificationNameString: String = "PhotoDataIsReceived"
+    private var photoName: String = ""
     var photos: [UIImage] = []
     
     func getPhotos(name: String, onPage: Int = 1) {
+        self.photoName = name
+        
         NetworkManager.instance.request(photoName: name, onPage: onPage) { (data, _, error) in
             guard error == nil, let data = data else { return }
             
@@ -67,7 +70,7 @@ class PhotoViewModel {
     }
     
     private func sendNotification() {
-        let notificationName = Notification.Name(PhotoViewModel.notificationNameString)
+        let notificationName = Notification.Name(self.photoName + PhotoViewModel.notificationNameString)
         NotificationCenter.default.post(name: notificationName, object: nil)
     }
 }

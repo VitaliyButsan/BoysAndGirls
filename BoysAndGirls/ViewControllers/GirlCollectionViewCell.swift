@@ -10,5 +10,13 @@ import UIKit
 
 class GirlCollectionViewCell: UICollectionViewCell {
     
+    static let cellId: String = "GirlCell"
+    
     @IBOutlet weak var imageView: UIImageView!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.imageView.layer.cornerRadius = 10
+        self.imageView.layer.masksToBounds = true 
+    }
 }

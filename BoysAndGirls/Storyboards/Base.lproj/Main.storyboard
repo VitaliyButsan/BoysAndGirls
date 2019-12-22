@@ -27,15 +27,10 @@
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Wx-h3-3FP">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="SuS-ji-XFp">
-                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
-                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="0Wx-h3-3FP" firstAttribute="top" secondItem="DVZ-5P-Gbd" secondAttribute="top" id="Eca-SL-net"/>
                                         <constraint firstAttribute="trailing" secondItem="0Wx-h3-3FP" secondAttribute="trailing" id="OlW-04-Oj5"/>
-                                        <constraint firstItem="SuS-ji-XFp" firstAttribute="centerY" secondItem="0Wx-h3-3FP" secondAttribute="centerY" id="e60-ai-Ldb"/>
-                                        <constraint firstItem="SuS-ji-XFp" firstAttribute="centerX" secondItem="0Wx-h3-3FP" secondAttribute="centerX" id="fAO-fA-7QA"/>
                                         <constraint firstAttribute="bottom" secondItem="0Wx-h3-3FP" secondAttribute="bottom" id="mAz-kN-7dg"/>
                                         <constraint firstItem="0Wx-h3-3FP" firstAttribute="leading" secondItem="DVZ-5P-Gbd" secondAttribute="leading" id="yd5-Ys-EkY"/>
                                     </constraints>
@@ -43,7 +38,6 @@
                                 <size key="customSize" width="50" height="50"/>
                                 <connections>
                                     <outlet property="imageView" destination="0Wx-h3-3FP" id="REV-e4-4Pf"/>
-                                    <outlet property="spinner" destination="SuS-ji-XFp" id="6J8-ng-zbW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -66,14 +60,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bAk-Ad-ZqZ">
-                            <size key="itemSize" width="100" height="100"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
+                        <collectionViewLayout key="collectionViewLayout" id="o8g-g9-W7n" customClass="PinterestLayout" customModule="BoysAndGirls" customModuleProvider="target"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Mzb-Ng-RLJ" customClass="GirlCollectionViewCell" customModule="BoysAndGirls" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GirlCell" id="Mzb-Ng-RLJ" customClass="GirlCollectionViewCell" customModule="BoysAndGirls" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="urN-o5-Mk9">
@@ -81,7 +70,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FHN-3O-OUG">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>

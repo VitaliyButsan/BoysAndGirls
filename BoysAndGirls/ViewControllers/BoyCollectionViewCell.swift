@@ -10,9 +10,10 @@ import UIKit
 
 class BoyCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    static let cellId: String = "BoyCell"
     
+    @IBOutlet weak var imageView: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.imageView.layer.cornerRadius = 10

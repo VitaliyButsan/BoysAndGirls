@@ -20,8 +20,7 @@ class BoysCollectionViewController: UICollectionViewController {
     private let activityIndicatorView = UIActivityIndicatorView(style: .large)
     
     private struct Constants {
-        static let searchingString: String = "man face"
-        static let cellID: String = "BoyCell"
+        static let photoName: String = "Man face"
         static let imageSize: String = "thumb"
         static let headerViewHeight: CGFloat = 30.0
         static let footerViewHeight: CGFloat = 50.0
@@ -35,7 +34,7 @@ class BoysCollectionViewController: UICollectionViewController {
 
         self.setUpHeaderView()
         self.setupObservers()
-        self.getData(byName: Constants.searchingString, onPage: page)
+        self.getData(byName: Constants.photoName, onPage: page)
     }
 
     override func viewWillLayoutSubviews() {
@@ -86,11 +85,12 @@ class BoysCollectionViewController: UICollectionViewController {
 
     // waiting retrieve data
     private func setupObservers() {
-        let notificationName = NSNotification.Name(rawValue: PhotoViewModel.notificationNameString)
+        let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadRows), name: notificationName, object: nil)
     }
     
     @objc func reloadRows() {
+        print("boys_data_is_received. Ok")
         DispatchQueue.main.async {
             self.removeActivityIndicatorView()
             self.collectionView.reloadData()
@@ -156,7 +156,7 @@ extension BoysCollectionViewController {
         if indexPath.row == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             page = page + 1
-            self.getData(byName: Constants.searchingString, onPage: page)
+            self.getData(byName: Constants.photoName, onPage: page)
         }
     }
 }
@@ -170,7 +170,7 @@ extension BoysCollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as! BoyCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BoyCollectionViewCell.cellId, for: indexPath) as! BoyCollectionViewCell
 
         cell.imageView.image = photoModel.photos[indexPath.row]
         return cell
@@ -204,6 +204,6 @@ extension BoysCollectionViewController: UICollectionViewDelegateFlowLayout {
 
 extension BoysCollectionViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return photoModel.photos[indexPath.item].size.height
+        return self.photoModel.photos[indexPath.item].size.height
     }
 }
