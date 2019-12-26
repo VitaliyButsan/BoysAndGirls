@@ -20,7 +20,7 @@ class BoysCollectionViewController: UICollectionViewController {
     
     private struct Constants {
         static let bubbleSound: URL = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
-        static let photoName: String = "Man face"
+        static let requestedName: String = "Man face"
         static let titleText: String = "Boys"
         static let imageSize: String = "thumb"
         static let headerViewHeight: CGFloat = 30.0
@@ -32,7 +32,7 @@ class BoysCollectionViewController: UICollectionViewController {
 
         self.setUpHeaderView()
         self.setupObservers()
-        self.getData(byName: Constants.photoName, onPage: pageNumber)
+        self.getData(byName: Constants.requestedName, onPage: pageNumber)
     }
 
     override func viewWillLayoutSubviews() {
@@ -81,7 +81,7 @@ class BoysCollectionViewController: UICollectionViewController {
 
     // waiting retrieve data
     private func setupObservers() {
-        let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
+        let notificationName = NSNotification.Name(rawValue: Constants.requestedName)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: notificationName, object: nil)
     }
     
@@ -94,7 +94,7 @@ class BoysCollectionViewController: UICollectionViewController {
     }
     
     private func getData(byName name: String, onPage page: Int) {
-        photoModel.getPhotos(name: name, onPage: page)
+        photoModel.getPhotos(by: name, onPage: page)
     }
     
     override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
@@ -149,7 +149,7 @@ extension BoysCollectionViewController {
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             pageNumber += 1
-            self.getData(byName: Constants.photoName, onPage: pageNumber)
+            self.getData(byName: Constants.requestedName, onPage: pageNumber)
         }
     }
 }

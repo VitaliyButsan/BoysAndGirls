@@ -20,7 +20,7 @@ class GirlsCollectionViewController: UICollectionViewController {
     
     private struct Constants {
         static let bubbleSound: URL = URL(fileURLWithPath: Bundle.main.path(forResource: "deletion_cell_bubble_sound", ofType: "mp3")!)
-        static let photoName: String = "Girl face"
+        static let requestedName: String = "Girl face"
         static let titleText: String = "Girls"
         
         static let headerViewHeight: CGFloat = 30.0
@@ -31,7 +31,7 @@ class GirlsCollectionViewController: UICollectionViewController {
         
         self.setUpHeaderView()
         self.setUpObservers()
-        self.getData(byName: Constants.photoName, onPage: pageNumber)
+        self.getData(byName: Constants.requestedName, onPage: pageNumber)
     }
 
     override func viewWillLayoutSubviews() {
@@ -73,7 +73,7 @@ class GirlsCollectionViewController: UICollectionViewController {
     }
     
     private func setUpObservers() {
-        let notificationName = NSNotification.Name(rawValue: Constants.photoName + PhotoViewModel.notificationNameString)
+        let notificationName = NSNotification.Name(rawValue: Constants.requestedName)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: notificationName, object: nil)
     }
     
@@ -86,7 +86,7 @@ class GirlsCollectionViewController: UICollectionViewController {
     }
     
     private func getData(byName photoName: String, onPage: Int) {
-        self.photoModel.getPhotos(name: photoName, onPage: onPage)
+        self.photoModel.getPhotos(by: photoName, onPage: onPage)
     }
     
     private func setLayoutDelegate() {
@@ -143,7 +143,7 @@ extension GirlsCollectionViewController {
         if indexPath.item == photoModel.photos.count - 1, !isPagging {
             isPagging = true
             pageNumber += 1
-            self.getData(byName: Constants.photoName, onPage: pageNumber)
+            self.getData(byName: Constants.requestedName, onPage: pageNumber)
         }
     }
 }

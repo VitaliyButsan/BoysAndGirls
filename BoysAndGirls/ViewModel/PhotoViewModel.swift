@@ -10,14 +10,13 @@ import UIKit
 
 class PhotoViewModel {
     
-    static var notificationNameString: String = "PhotoDataIsReceived"
-    private var photoName: String = ""
+    private var notificationNameString: String = ""
     var photos: [UIImage] = []
     
-    func getPhotos(name: String, onPage: Int = 1) {
-        self.photoName = name
+    func getPhotos(by requestedName: String, onPage: Int = 1) {
+        self.notificationNameString = requestedName
         
-        NetworkManager.instance.request(photoName: name, onPage: onPage) { (data, _, error) in
+        NetworkManager.instance.request(photoName: requestedName, onPage: onPage) { (data, _, error) in
             guard error == nil, let data = data else { return }
             
             let parsingResult = self.parse(data: data)
@@ -38,6 +37,7 @@ class PhotoViewModel {
     private func saveImagesFrom(_ photoDataModels: [UnsplashPhoto]) {
         
         let privateSerialQueue = DispatchQueue(label: "com.private_serial_queue", qos: .userInitiated)
+        let serialQueueForPerformAppendToArray = DispatchQueue(label: "com.private_serial_queue_to_perform_append")
         
         let receivePhotosTaskQueue: OperationQueue = {
             let queue = OperationQueue()
@@ -51,17 +51,20 @@ class PhotoViewModel {
             // make instance of operation
             let photoReceiver = PhotoDataReceiverOperation()
             photoReceiver.inputPhotoModel = photoModel
-            // add operation on queue
+            // add operation on the queue
             receivePhotosTaskQueue.addOperation(photoReceiver)
             
-            // wait for done of each operation in queue
+            // wait for done of each operation in the queue
             photoReceiver.completionBlock = { [unowned self] in
                 guard let rawData = photoReceiver.receivedPhotoRawData else { return }
                 guard let image = UIImage(data: rawData) else { return }
-                self.photos.append(image)
-                print("received_photos_from_net:", self.photos.count)
                 
-                // send notification if all operation is done on queue
+                serialQueueForPerformAppendToArray.sync {
+                    self.photos.append(image)
+                }
+                print("\(self.notificationNameString.uppercased()) photo_from_net:", self.photos.count)
+                
+                // send a notification if all operations are completed in the queue
                 if receivePhotosTaskQueue.operations.isEmpty {
                     self.sendNotification()
                 }
@@ -70,7 +73,7 @@ class PhotoViewModel {
     }
     
     private func sendNotification() {
-        let notificationName = Notification.Name(self.photoName + PhotoViewModel.notificationNameString)
+        let notificationName = Notification.Name(self.notificationNameString)
         NotificationCenter.default.post(name: notificationName, object: nil)
     }
 }
